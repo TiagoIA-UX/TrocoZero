@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>TrocoZero - Painel</title>
+    <link rel="stylesheet" href="/static/style.css" />
+  </head>
+  <body>
+    <header class="header">
+      <div class="brand">
+        <span class="logo">TZ</span>
+        <div>
+          <h1>TrocoZero</h1>
+          <p>Painel operacional</p>
+        </div>
+      </div>
+      <div class="status" id="healthStatus">Health: ...</div>
+    </header>
+
+    <main class="container">
+      <section class="card">
+        <h2>Conexao</h2>
+        <div class="grid">
+          <label>
+            Base URL
+            <input id="baseUrl" placeholder="http://localhost:3000" />
+          </label>
+          <label>
+            API Key (opcional)
+            <input id="apiKey" placeholder="x-api-key" />
+          </label>
+        </div>
+        <button id="saveConfig">Salvar</button>
+      </section>
+
+      <section class="card">
+        <h2>Lojas</h2>
+        <div class="grid">
+          <label>
+            Nome da loja
+            <input id="storeName" placeholder="Loja Centro" />
+          </label>
+          <button id="createStore">Criar loja</button>
+        </div>
+        <div class="row">
+          <button id="refreshStores">Atualizar lista</button>
+        </div>
+        <div id="storesList" class="list"></div>
+      </section>
+
+      <section class="card">
+        <h2>Caixas</h2>
+        <div class="grid">
+          <label>
+            Loja selecionada
+            <select id="storeSelect"></select>
+          </label>
+          <label>
+            Nome do caixa
+            <input id="registerLabel" placeholder="Caixa 1" />
+          </label>
+          <button id="createRegister">Criar caixa</button>
+        </div>
+        <div class="row">
+          <button id="refreshRegisters">Atualizar caixas</button>
+        </div>
+        <div id="registersList" class="list"></div>
+      </section>
+
+      <section class="card">
+        <h2>Venda em dinheiro</h2>
+        <p class="hint">Valores em centavos. Ex: R$ 12,50 = 1250</p>
+        <div class="grid">
+          <label>
+            Loja
+            <select id="saleStoreSelect"></select>
+          </label>
+          <label>
+            Caixa
+            <select id="saleRegisterSelect"></select>
+          </label>
+          <label>
+            Valor da venda
+            <input id="saleTotal" type="number" min="1" />
+          </label>
+          <label>
+            Dinheiro recebido
+            <input id="cashReceived" type="number" min="1" />
+          </label>
+          <button id="createSale">Registrar venda</button>
+        </div>
+        <pre id="saleResult" class="result"></pre>
+      </section>
+
+      <section class="card">
+        <h2>Troco via Pix</h2>
+        <div class="grid">
+          <label>
+            Sale ID
+            <input id="saleIdPix" placeholder="uuid" />
+          </label>
+          <label>
+            Chave Pix
+            <input id="pixKey" placeholder="cpf:123..." />
+          </label>
+          <button id="requestPix">Enviar Pix</button>
+        </div>
+        <pre id="pixResult" class="result"></pre>
+      </section>
+
+      <section class="card">
+        <h2>Confirmacao Pix</h2>
+        <div class="grid">
+          <label>
+            Pix Transfer ID
+            <input id="pixTransferId" placeholder="uuid" />
+          </label>
+          <button id="confirmPix">Confirmar</button>
+        </div>
+        <pre id="confirmResult" class="result"></pre>
+      </section>
+
+      <section class="card">
+        <h2>Relatorio diario</h2>
+        <div class="grid">
+          <label>
+            Loja
+            <select id="reportStoreSelect"></select>
+          </label>
+          <label>
+            Data (YYYY-MM-DD)
+            <input id="reportDate" placeholder="2026-01-18" />
+          </label>
+          <button id="getReport">Gerar relatorio</button>
+        </div>
+        <pre id="reportResult" class="result"></pre>
+      </section>
+    </main>
+
+    <script src="/static/app.js"></script>
+  </body>
+</html>

@@ -1,0 +1,15 @@
+services:
+  postgres:
+    image: postgres:16
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: trocozero
+      POSTGRES_PASSWORD: trocozero
+      POSTGRES_DB: trocozero
+    ports:
+      - "5432:5432"
+    volumes:
+      - trocozero_pg:/var/lib/postgresql/data
+
+volumes:
+  trocozero_pg:
