@@ -3,7 +3,8 @@ export const env = {
   storageMode: process.env.TROCOZERO_STORAGE ?? "postgres",
   port: Number(process.env.PORT ?? "3000"),
   host: process.env.HOST ?? "0.0.0.0",
-  apiKey: process.env.TROCOZERO_API_KEY ?? ""
+  apiKey: process.env.TROCOZERO_API_KEY ?? "",
+  adminApiKey: process.env.TROCOZERO_ADMIN_API_KEY ?? ""
 };
 
 if (env.storageMode !== "memory" && !env.databaseUrl) {

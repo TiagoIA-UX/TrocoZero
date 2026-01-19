@@ -70,8 +70,12 @@ npm run build:sdk
 - `docs/Integracao_PDV.md`
 
 ## Segurança
-Se definir `TROCOZERO_API_KEY`, todas as rotas (exceto `/health` e painel) exigem header:
-`x-api-key: SUA_CHAVE`.
+Rotas exigem `x-api-key` (exceto `/health` e painel). Há duas opções:
+- **Chave estática** via `TROCOZERO_API_KEY`
+- **Chaves dinâmicas** por loja via `/admin/stores/:storeId/api-keys`
+
+Para operações admin, configure `TROCOZERO_ADMIN_API_KEY` e use header:
+`x-admin-key: SUA_CHAVE_ADMIN`.
 
 ## Licença
 MIT

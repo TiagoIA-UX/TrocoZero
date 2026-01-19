@@ -13,6 +13,7 @@
 - Usar `x-api-key`
 - HTTPS em produção
 - Idempotency Key por venda
+ - Chaves dinâmicas por loja via `/admin/stores/:storeId/api-keys`
 
 ---
 

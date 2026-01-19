@@ -18,11 +18,18 @@ import { InMemoryStoreRepository } from "../infrastructure/repositories/InMemory
 import { InMemoryCashRegisterRepository } from "../infrastructure/repositories/InMemoryCashRegisterRepository.js";
 import { PgStoreRepository } from "../infrastructure/repositories/PgStoreRepository.js";
 import { PgCashRegisterRepository } from "../infrastructure/repositories/PgCashRegisterRepository.js";
+import { InMemoryApiKeyRepository } from "../infrastructure/repositories/InMemoryApiKeyRepository.js";
+import { PgApiKeyRepository } from "../infrastructure/repositories/PgApiKeyRepository.js";
+import { InMemoryIdempotencyRepository } from "../infrastructure/repositories/InMemoryIdempotencyRepository.js";
+import { PgIdempotencyRepository } from "../infrastructure/repositories/PgIdempotencyRepository.js";
 import { env } from "../config/env.js";
 import { CreateStore } from "../application/use-cases/CreateStore.js";
 import { ListStores } from "../application/use-cases/ListStores.js";
 import { CreateCashRegister } from "../application/use-cases/CreateCashRegister.js";
 import { ListCashRegisters } from "../application/use-cases/ListCashRegisters.js";
+import { CreateApiKey } from "../application/use-cases/CreateApiKey.js";
+import { ListApiKeys } from "../application/use-cases/ListApiKeys.js";
+import { hashApiKey } from "../shared/crypto.js";
 
 const app = Fastify({ logger: true });
 
@@ -40,6 +47,12 @@ const registerRepo =
   env.storageMode === "memory"
     ? new InMemoryCashRegisterRepository()
     : new PgCashRegisterRepository();
+const apiKeyRepo =
+  env.storageMode === "memory" ? new InMemoryApiKeyRepository() : new PgApiKeyRepository();
+const idempotencyRepo =
+  env.storageMode === "memory"
+    ? new InMemoryIdempotencyRepository()
+    : new PgIdempotencyRepository();
 
 const processCashSale = new ProcessCashSale(saleRepo, logRepo);
 const requestPixChange = new RequestPixChange(saleRepo, pixRepo, logRepo);
@@ -49,9 +62,12 @@ const createStore = new CreateStore(storeRepo);
 const listStores = new ListStores(storeRepo);
 const createCashRegister = new CreateCashRegister(registerRepo);
 const listCashRegisters = new ListCashRegisters(registerRepo);
+const createApiKey = new CreateApiKey(apiKeyRepo);
+const listApiKeys = new ListApiKeys(apiKeyRepo);
 
-// Idempotencia basica em memoria para o MVP.
-const idempotency = new Map<string, unknown>();
+const apiKeySchema = z.object({
+  name: z.string().min(2)
+});
 
 app.setErrorHandler((error, _req, reply) => {
   if (error instanceof z.ZodError) {
@@ -88,11 +104,25 @@ const cashRegisterSchema = z.object({
 });
 
 app.addHook("onRequest", async (req, reply) => {
-  if (!env.apiKey) return;
   if (req.url.startsWith("/health")) return;
   if (req.url === "/" || req.url.startsWith("/static/")) return;
+  if (req.url.startsWith("/admin")) return;
+
   const apiKey = req.headers["x-api-key"];
-  if (apiKey !== env.apiKey) {
+  if (!apiKey) return reply.status(401).send({ error: "UNAUTHORIZED" });
+
+  if (env.apiKey && apiKey === env.apiKey) return;
+
+  const match = await apiKeyRepo.findByHash(hashApiKey(String(apiKey)));
+  if (!match) return reply.status(401).send({ error: "UNAUTHORIZED" });
+});
+
+app.addHook("onRequest", async (req, reply) => {
+  if (!req.url.startsWith("/admin")) return;
+  if (!env.adminApiKey) return reply.status(500).send({ error: "ADMIN_KEY_NOT_CONFIGURED" });
+
+  const adminKey = req.headers["x-admin-key"];
+  if (adminKey !== env.adminApiKey) {
     return reply.status(401).send({ error: "UNAUTHORIZED" });
   }
 });
@@ -144,9 +174,29 @@ app.get("/stores/:storeId/registers", async (req, res) => {
   return res.send(result);
 });
 
+app.post("/admin/stores/:storeId/api-keys", async (req, res) => {
+  const params = req.params as { storeId: string };
+  const body = apiKeySchema.parse(req.body);
+
+  const store = await storeRepo.findById(params.storeId);
+  if (!store) return res.status(404).send({ error: "STORE_NOT_FOUND" });
+
+  const result = await createApiKey.execute({ storeId: params.storeId, name: body.name });
+  return res.send(result);
+});
+
+app.get("/admin/stores/:storeId/api-keys", async (req, res) => {
+  const params = req.params as { storeId: string };
+  const result = await listApiKeys.execute({ storeId: params.storeId });
+  return res.send(result);
+});
+
 app.post("/sales/cash", async (req, res) => {
   const key = req.headers["idempotency-key"] as string | undefined;
-  if (key && idempotency.has(key)) return res.send(idempotency.get(key));
+  if (key) {
+    const cached = await idempotencyRepo.find(key);
+    if (cached) return res.send(cached.response);
+  }
 
   const body = cashSaleSchema.parse(req.body);
 
@@ -159,7 +209,7 @@ app.post("/sales/cash", async (req, res) => {
   }
 
   const result = await processCashSale.execute(body);
-  if (key) idempotency.set(key, result);
+  if (key) await idempotencyRepo.save({ key, response: result });
   return res.send(result);
 });
 
