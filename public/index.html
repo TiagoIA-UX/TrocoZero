@@ -136,6 +136,32 @@
         </div>
         <pre id="reportResult" class="result"></pre>
       </section>
+
+      <section class="card">
+        <h2>Historico de Transacoes</h2>
+        <div class="grid">
+          <label>
+            Loja
+            <select id="historyStoreSelect"></select>
+          </label>
+          <label>
+            Data inicial (YYYY-MM-DD)
+            <input id="historyStartDate" type="date" />
+          </label>
+          <label>
+            Data final (YYYY-MM-DD)
+            <input id="historyEndDate" type="date" />
+          </label>
+          <button id="loadHistory">Carregar historico</button>
+        </div>
+        <div id="historyStats" class="stats"></div>
+        <div id="historyList" class="history-list"></div>
+        <div class="pagination">
+          <button id="historyPrev" disabled>Anterior</button>
+          <span id="historyPage">Pagina 1</span>
+          <button id="historyNext" disabled>Proximo</button>
+        </div>
+      </section>
     </main>
 
     <script src="/static/app.js"></script>

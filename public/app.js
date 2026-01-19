@@ -42,6 +42,17 @@ const confirmResult = $("confirmResult");
 const reportDate = $("reportDate");
 const reportResult = $("reportResult");
 
+const historyStoreSelect = $("historyStoreSelect");
+const historyStartDate = $("historyStartDate");
+const historyEndDate = $("historyEndDate");
+const historyStats = $("historyStats");
+const historyList = $("historyList");
+const historyPage = $("historyPage");
+const historyPrev = $("historyPrev");
+const historyNext = $("historyNext");
+
+let historyState = { offset: 0, limit: 20, total: 0 };
+
 baseUrlInput.value = state.baseUrl;
 apiKeyInput.value = state.apiKey;
 
@@ -85,6 +96,7 @@ async function loadStores() {
   storeSelect.innerHTML = options;
   saleStoreSelect.innerHTML = options;
   reportStoreSelect.innerHTML = options;
+  historyStoreSelect.innerHTML = options;
 }
 
 async function loadRegisters() {
@@ -179,8 +191,96 @@ $("getReport").addEventListener("click", async () => {
   reportResult.textContent = JSON.stringify(data, null, 2);
 });
 
+function formatMoney(cents) {
+  return `R$ ${(cents / 100).toFixed(2).replace(".", ",")}`;
+}
+
+function formatTime(isoDate) {
+  return new Date(isoDate).toLocaleString("pt-BR");
+}
+
+function renderHistoryItem(tx) {
+  const payload = tx.payload;
+  let details = "";
+
+  if (tx.type === "CASH_SALE_REGISTERED") {
+    details = `Venda: ${formatMoney(payload.saleTotal)} | Recebido: ${formatMoney(payload.cashReceived)} | Troco: ${formatMoney(payload.changeAmount)}`;
+  } else if (tx.type === "PIX_CHANGE_SENT" || tx.type === "PIX_CHANGE_REQUESTED") {
+    details = `Troco Pix: ${formatMoney(payload.changeAmount)} | Chave: ${payload.pixKey || "-"}`;
+  } else if (tx.type === "PIX_CHANGE_CONFIRMED") {
+    details = `Pix confirmado | Sale: ${payload.saleId?.slice(0, 8) || "-"}`;
+  }
+
+  return `
+    <div class="history-item">
+      <span class="type ${tx.type}">${tx.type.replace(/_/g, " ")}</span>
+      <span class="time">${formatTime(tx.occurredAt)}</span>
+      <div class="details">${details}</div>
+    </div>
+  `;
+}
+
+async function loadHistory() {
+  const storeId = historyStoreSelect.value;
+  const startDate = historyStartDate.value;
+  const endDate = historyEndDate.value;
+
+  if (!storeId || !startDate || !endDate) {
+    historyList.innerHTML = "<p>Selecione loja e datas</p>";
+    return;
+  }
+
+  const params = new URLSearchParams({
+    storeId,
+    startDate,
+    endDate,
+    limit: historyState.limit,
+    offset: historyState.offset
+  });
+
+  const data = await api(`/transactions?${params}`);
+  historyState.total = data.total;
+
+  historyStats.innerHTML = `
+    <div>Total de transações: <span>${data.total}</span></div>
+    <div>Mostrando: <span>${data.offset + 1} - ${Math.min(data.offset + data.transactions.length, data.total)}</span></div>
+  `;
+
+  if (data.transactions.length === 0) {
+    historyList.innerHTML = "<p style='padding:16px'>Nenhuma transação encontrada</p>";
+  } else {
+    historyList.innerHTML = data.transactions.map(renderHistoryItem).join("");
+  }
+
+  const currentPage = Math.floor(historyState.offset / historyState.limit) + 1;
+  const totalPages = Math.ceil(historyState.total / historyState.limit);
+  historyPage.textContent = `Página ${currentPage} de ${totalPages}`;
+
+  historyPrev.disabled = historyState.offset === 0;
+  historyNext.disabled = historyState.offset + historyState.limit >= historyState.total;
+}
+
+$("loadHistory").addEventListener("click", () => {
+  historyState.offset = 0;
+  loadHistory();
+});
+
+historyPrev.addEventListener("click", () => {
+  historyState.offset = Math.max(0, historyState.offset - historyState.limit);
+  loadHistory();
+});
+
+historyNext.addEventListener("click", () => {
+  historyState.offset += historyState.limit;
+  loadHistory();
+});
+
 (async () => {
-  reportDate.value = new Date().toISOString().slice(0, 10);
+  const today = new Date().toISOString().slice(0, 10);
+  reportDate.value = today;
+  historyStartDate.value = today;
+  historyEndDate.value = today;
+
   await refreshHealth();
   try {
     await loadStores();

@@ -119,3 +119,89 @@ button:hover {
   min-height: 40px;
   overflow-x: auto;
 }
+
+.stats {
+  display: flex;
+  gap: 24px;
+  margin: 12px 0;
+  padding: 12px;
+  background: #f0f9ff;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+.stats span {
+  font-weight: 600;
+  color: #0369a1;
+}
+
+.history-list {
+  margin-top: 12px;
+  max-height: 400px;
+  overflow-y: auto;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+}
+
+.history-item {
+  padding: 12px 16px;
+  border-bottom: 1px solid #e2e8f0;
+  font-size: 13px;
+}
+
+.history-item:last-child {
+  border-bottom: none;
+}
+
+.history-item .type {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  margin-right: 8px;
+}
+
+.history-item .type.CASH_SALE_REGISTERED {
+  background: #d1fae5;
+  color: #065f46;
+}
+
+.history-item .type.PIX_CHANGE_REQUESTED {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.history-item .type.PIX_CHANGE_SENT {
+  background: #dbeafe;
+  color: #1e40af;
+}
+
+.history-item .type.PIX_CHANGE_CONFIRMED {
+  background: #c7d2fe;
+  color: #3730a3;
+}
+
+.history-item .time {
+  color: #64748b;
+  font-size: 12px;
+}
+
+.history-item .details {
+  margin-top: 6px;
+  color: #475569;
+}
+
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 12px;
+}
+
+.pagination button:disabled {
+  background: #94a3b8;
+  cursor: not-allowed;
+}

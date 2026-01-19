@@ -29,6 +29,7 @@ import { CreateCashRegister } from "../application/use-cases/CreateCashRegister.
 import { ListCashRegisters } from "../application/use-cases/ListCashRegisters.js";
 import { CreateApiKey } from "../application/use-cases/CreateApiKey.js";
 import { ListApiKeys } from "../application/use-cases/ListApiKeys.js";
+import { ListTransactions } from "../application/use-cases/ListTransactions.js";
 import { hashApiKey } from "../shared/crypto.js";
 
 const app = Fastify({ logger: true });
@@ -64,6 +65,7 @@ const createCashRegister = new CreateCashRegister(registerRepo);
 const listCashRegisters = new ListCashRegisters(registerRepo);
 const createApiKey = new CreateApiKey(apiKeyRepo);
 const listApiKeys = new ListApiKeys(apiKeyRepo);
+const listTransactions = new ListTransactions(logRepo);
 
 const apiKeySchema = z.object({
   name: z.string().min(2)
@@ -93,6 +95,14 @@ const pixChangeSchema = z.object({
 const dailyReportSchema = z.object({
   storeId: z.string().min(1),
   date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/)
+});
+
+const transactionsSchema = z.object({
+  storeId: z.string().min(1),
+  startDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
+  endDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
+  limit: z.coerce.number().int().positive().optional(),
+  offset: z.coerce.number().int().nonnegative().optional()
 });
 
 const storeSchema = z.object({
@@ -234,6 +244,12 @@ app.post("/pix-transfers/:pixTransferId/confirm", async (req, res) => {
 app.get("/reports/daily", async (req, res) => {
   const query = dailyReportSchema.parse(req.query);
   const result = await getDailyReport.execute(query);
+  return res.send(result);
+});
+
+app.get("/transactions", async (req, res) => {
+  const query = transactionsSchema.parse(req.query);
+  const result = await listTransactions.execute(query);
   return res.send(result);
 });
 
