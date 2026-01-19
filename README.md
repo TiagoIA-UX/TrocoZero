@@ -57,6 +57,18 @@ npm run dev
 O painel está embutido no servidor:
 `http://127.0.0.1:3000`
 
+## SDK oficial (pacote único)
+O SDK oficial está em `sdk/` e exporta o cliente `TrocoZeroClient`.
+Para compilar:
+```bash
+npm install --include=dev
+npm run build:sdk
+```
+
+## Documentação operacional
+- `docs/Manual_Treinamento_Lojas.md`
+- `docs/Integracao_PDV.md`
+
 ## Segurança
 Se definir `TROCOZERO_API_KEY`, todas as rotas (exceto `/health` e painel) exigem header:
 `x-api-key: SUA_CHAVE`.
