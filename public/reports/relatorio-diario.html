@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Relatório Diário — TrocoZero</title>
+  <link rel="stylesheet" href="report-template.css">
+</head>
+<body>
+  <div class="watermark">TZ</div>
+
+  <div class="report-page">
+    <!-- Header -->
+    <header class="report-header">
+      <div class="report-logo">
+        <div class="report-logo-icon">TZ</div>
+        <div class="report-logo-text">TrocoZero</div>
+      </div>
+      <h1 class="report-title">Relatório Diário de Operações</h1>
+      <p class="report-subtitle">Resumo consolidado de transações de troco via Pix</p>
+      <div class="report-meta">
+        <div class="report-meta-item">
+          <span>📍</span>
+          <strong id="storeName">Loja Centro</strong>
+        </div>
+        <div class="report-meta-item">
+          <span>📅</span>
+          <strong id="reportDate">19 de Janeiro de 2026</strong>
+        </div>
+        <div class="report-meta-item">
+          <span>🕐</span>
+          <span>Gerado às <strong id="reportTime">14:32</strong></span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Summary Cards -->
+    <div class="summary-grid">
+      <div class="summary-card highlight">
+        <div class="summary-label">Total de Troco via Pix</div>
+        <div class="summary-value" id="totalPixChange">R$ 847,50</div>
+        <div class="summary-detail" id="totalTransactions">127 transações</div>
+      </div>
+      <div class="summary-card">
+        <div class="summary-label">Ticket Médio de Troco</div>
+        <div class="summary-value" id="avgTicket">R$ 6,67</div>
+        <div class="summary-detail">por transação</div>
+      </div>
+      <div class="summary-card gold">
+        <div class="summary-label">Taxa de Adesão</div>
+        <div class="summary-value" id="adoptionRate">78%</div>
+        <div class="summary-detail">clientes optaram por Pix</div>
+      </div>
+    </div>
+
+    <!-- Seção 1: Resumo por Caixa -->
+    <div class="section-header">
+      <div class="section-number">1</div>
+      <h2 class="section-title">Resumo por Caixa</h2>
+    </div>
+
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Caixa</th>
+          <th class="text-center">Transações</th>
+          <th class="text-right">Total Pix</th>
+          <th class="text-center">Média</th>
+          <th class="text-center">Adesão</th>
+        </tr>
+      </thead>
+      <tbody id="registerTable">
+        <tr>
+          <td><strong>Caixa 01</strong></td>
+          <td class="text-center">45</td>
+          <td class="text-right amount positive">R$ 312,00</td>
+          <td class="text-center">R$ 6,93</td>
+          <td class="text-center">82%</td>
+        </tr>
+        <tr>
+          <td><strong>Caixa 02</strong></td>
+          <td class="text-center">52</td>
+          <td class="text-right amount positive">R$ 347,50</td>
+          <td class="text-center">R$ 6,68</td>
+          <td class="text-center">76%</td>
+        </tr>
+        <tr>
+          <td><strong>Caixa 03</strong></td>
+          <td class="text-center">30</td>
+          <td class="text-right amount positive">R$ 188,00</td>
+          <td class="text-center">R$ 6,27</td>
+          <td class="text-center">74%</td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr style="background: var(--bg-alt); font-weight: 600;">
+          <td>TOTAL</td>
+          <td class="text-center">127</td>
+          <td class="text-right amount">R$ 847,50</td>
+          <td class="text-center">R$ 6,67</td>
+          <td class="text-center">78%</td>
+        </tr>
+      </tfoot>
+    </table>
+
+    <!-- Seção 2: Distribuição por Horário -->
+    <div class="section-header">
+      <div class="section-number">2</div>
+      <h2 class="section-title">Distribuição por Horário</h2>
+    </div>
+
+    <div class="chart-container">
+      <div class="bar-chart" id="hourlyChart">
+        <div class="bar-item">
+          <span class="bar-label">08h - 10h</span>
+          <div class="bar-track"><div class="bar-fill" style="width: 25%"></div></div>
+          <span class="bar-value">R$ 89,00</span>
+        </div>
+        <div class="bar-item">
+          <span class="bar-label">10h - 12h</span>
+          <div class="bar-track"><div class="bar-fill accent" style="width: 65%"></div></div>
+          <span class="bar-value">R$ 234,50</span>
+        </div>
+        <div class="bar-item">
+          <span class="bar-label">12h - 14h</span>
+          <div class="bar-track"><div class="bar-fill accent" style="width: 80%"></div></div>
+          <span class="bar-value">R$ 287,00</span>
+        </div>
+        <div class="bar-item">
+          <span class="bar-label">14h - 16h</span>
+          <div class="bar-track"><div class="bar-fill" style="width: 45%"></div></div>
+          <span class="bar-value">R$ 156,00</span>
+        </div>
+        <div class="bar-item">
+          <span class="bar-label">16h - 18h</span>
+          <div class="bar-track"><div class="bar-fill" style="width: 22%"></div></div>
+          <span class="bar-value">R$ 81,00</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Seção 3: Últimas Transações -->
+    <div class="section-header">
+      <div class="section-number">3</div>
+      <h2 class="section-title">Últimas Transações</h2>
+    </div>
+
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Horário</th>
+          <th>Caixa</th>
+          <th>Chave Pix</th>
+          <th class="text-right">Valor</th>
+          <th class="text-center">Status</th>
+        </tr>
+      </thead>
+      <tbody id="transactionsTable">
+        <tr>
+          <td>14:28</td>
+          <td>Caixa 01</td>
+          <td>***456@email.com</td>
+          <td class="text-right amount">R$ 3,50</td>
+          <td class="text-center"><span class="status-badge confirmed">Confirmado</span></td>
+        </tr>
+        <tr>
+          <td>14:15</td>
+          <td>Caixa 02</td>
+          <td>***789@celular</td>
+          <td class="text-right amount">R$ 7,25</td>
+          <td class="text-center"><span class="status-badge confirmed">Confirmado</span></td>
+        </tr>
+        <tr>
+          <td>14:02</td>
+          <td>Caixa 01</td>
+          <td>CPF ***234</td>
+          <td class="text-right amount">R$ 12,00</td>
+          <td class="text-center"><span class="status-badge confirmed">Confirmado</span></td>
+        </tr>
+        <tr>
+          <td>13:48</td>
+          <td>Caixa 03</td>
+          <td>***321@email.com</td>
+          <td class="text-right amount">R$ 5,75</td>
+          <td class="text-center"><span class="status-badge confirmed">Confirmado</span></td>
+        </tr>
+        <tr>
+          <td>13:35</td>
+          <td>Caixa 02</td>
+          <td>CPF ***567</td>
+          <td class="text-right amount">R$ 8,50</td>
+          <td class="text-center"><span class="status-badge confirmed">Confirmado</span></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Footer -->
+    <footer class="report-footer">
+      <div class="report-footer-brand">
+        <div class="report-footer-logo">TZ</div>
+        <span>TrocoZero © 2026</span>
+      </div>
+      <div class="report-confidential">
+        Documento confidencial — Uso interno
+      </div>
+      <div>
+        Página 1 de 1
+      </div>
+    </footer>
+  </div>
+
+  <!-- Print Actions -->
+  <div class="print-actions no-print">
+    <button class="btn-print" onclick="window.print()">
+      🖨️ Imprimir
+    </button>
+    <button class="btn-print btn-download" onclick="downloadPDF()">
+      📥 Baixar PDF
+    </button>
+  </div>
+
+  <script>
+    function downloadPDF() {
+      alert('Para salvar como PDF, use: Imprimir → Salvar como PDF');
+      window.print();
+    }
+  </script>
+</body>
+</html>

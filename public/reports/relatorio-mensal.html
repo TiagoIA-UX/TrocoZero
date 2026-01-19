@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Relatório Mensal Executivo — TrocoZero</title>
+  <link rel="stylesheet" href="report-template.css">
+  <style>
+    .executive-summary {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+      color: white;
+      padding: 40px;
+      border-radius: 16px;
+      margin-bottom: 40px;
+    }
+    .executive-summary h2 {
+      color: white;
+      font-family: 'Merriweather', serif;
+      margin-bottom: 16px;
+    }
+    .executive-summary p {
+      opacity: 0.9;
+      line-height: 1.8;
+    }
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-top: 24px;
+    }
+    .kpi-item {
+      text-align: center;
+      padding: 16px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 12px;
+    }
+    .kpi-value {
+      font-family: 'Merriweather', serif;
+      font-size: 1.75rem;
+      font-weight: 700;
+    }
+    .kpi-label {
+      font-size: 0.8125rem;
+      opacity: 0.8;
+      margin-top: 4px;
+    }
+    .trend-indicator {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 0.875rem;
+      padding: 4px 8px;
+      border-radius: 4px;
+      margin-left: 8px;
+    }
+    .trend-indicator.up {
+      background: var(--accent-light);
+      color: #22543d;
+    }
+    .trend-indicator.down {
+      background: #fed7d7;
+      color: #c53030;
+    }
+    .insights-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+      margin-bottom: 40px;
+    }
+    .insight-card {
+      background: var(--bg-alt);
+      border-radius: 12px;
+      padding: 24px;
+      border-left: 4px solid var(--primary);
+    }
+    .insight-card.success {
+      border-left-color: var(--accent);
+    }
+    .insight-card.warning {
+      border-left-color: var(--gold);
+    }
+    .insight-card h4 {
+      color: var(--primary);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .insight-card p {
+      color: var(--text-light);
+      font-size: 0.9375rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="watermark">TZ</div>
+
+  <div class="report-page">
+    <!-- Header -->
+    <header class="report-header">
+      <div class="report-logo">
+        <div class="report-logo-icon">TZ</div>
+        <div class="report-logo-text">TrocoZero</div>
+      </div>
+      <h1 class="report-title">Relatório Mensal Executivo</h1>
+      <p class="report-subtitle">Análise consolidada de performance e resultados</p>
+      <div class="report-meta">
+        <div class="report-meta-item">
+          <span>📍</span>
+          <strong>Rede Loja Centro (5 unidades)</strong>
+        </div>
+        <div class="report-meta-item">
+          <span>📅</span>
+          <strong>Janeiro de 2026</strong>
+        </div>
+      </div>
+    </header>
+
+    <!-- Executive Summary -->
+    <div class="executive-summary">
+      <h2>📊 Resumo Executivo</h2>
+      <p>
+        No mês de janeiro de 2026, a rede registrou <strong>3.847 transações de troco via Pix</strong>, 
+        representando um aumento de 23% em relação ao mês anterior. O volume total transferido foi de 
+        <strong>R$ 25.680,75</strong>, com ticket médio de R$ 6,68. A taxa de adesão dos clientes 
+        ao troco via Pix atingiu <strong>78%</strong>, demonstrando alta aceitação da solução.
+      </p>
+      <div class="kpi-grid">
+        <div class="kpi-item">
+          <div class="kpi-value">R$ 25.680</div>
+          <div class="kpi-label">Volume total Pix</div>
+        </div>
+        <div class="kpi-item">
+          <div class="kpi-value">3.847</div>
+          <div class="kpi-label">Transações</div>
+        </div>
+        <div class="kpi-item">
+          <div class="kpi-value">78%</div>
+          <div class="kpi-label">Taxa de adesão</div>
+        </div>
+        <div class="kpi-item">
+          <div class="kpi-value">99,8%</div>
+          <div class="kpi-label">Taxa de sucesso</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Summary Cards -->
+    <div class="summary-grid">
+      <div class="summary-card highlight">
+        <div class="summary-label">Volume Total</div>
+        <div class="summary-value">R$ 25.680,75</div>
+        <div class="summary-detail">
+          <span class="trend-indicator up">↑ 23%</span> vs. mês anterior
+        </div>
+      </div>
+      <div class="summary-card">
+        <div class="summary-label">Ticket Médio</div>
+        <div class="summary-value">R$ 6,68</div>
+        <div class="summary-detail">
+          <span class="trend-indicator up">↑ 5%</span> vs. mês anterior
+        </div>
+      </div>
+      <div class="summary-card gold">
+        <div class="summary-label">Economia Estimada</div>
+        <div class="summary-value">R$ 1.230</div>
+        <div class="summary-detail">em moedas e operacional</div>
+      </div>
+    </div>
+
+    <!-- Seção 1: Performance por Loja -->
+    <div class="section-header">
+      <div class="section-number">1</div>
+      <h2 class="section-title">Performance por Unidade</h2>
+    </div>
+
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Unidade</th>
+          <th class="text-center">Transações</th>
+          <th class="text-right">Volume Pix</th>
+          <th class="text-center">Adesão</th>
+          <th class="text-center">Variação</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Loja Centro</strong></td>
+          <td class="text-center">1.245</td>
+          <td class="text-right amount positive">R$ 8.320,00</td>
+          <td class="text-center">82%</td>
+          <td class="text-center"><span class="trend-indicator up">↑ 28%</span></td>
+        </tr>
+        <tr>
+          <td><strong>Loja Shopping</strong></td>
+          <td class="text-center">987</td>
+          <td class="text-right amount positive">R$ 6.590,50</td>
+          <td class="text-center">79%</td>
+          <td class="text-center"><span class="trend-indicator up">↑ 22%</span></td>
+        </tr>
+        <tr>
+          <td><strong>Loja Bairro Norte</strong></td>
+          <td class="text-center">756</td>
+          <td class="text-right amount positive">R$ 5.052,00</td>
+          <td class="text-center">76%</td>
+          <td class="text-center"><span class="trend-indicator up">↑ 18%</span></td>
+        </tr>
+        <tr>
+          <td><strong>Loja Bairro Sul</strong></td>
+          <td class="text-center">523</td>
+          <td class="text-right amount positive">R$ 3.494,25</td>
+          <td class="text-center">74%</td>
+          <td class="text-center"><span class="trend-indicator up">↑ 25%</span></td>
+        </tr>
+        <tr>
+          <td><strong>Loja Express</strong></td>
+          <td class="text-center">336</td>
+          <td class="text-right amount positive">R$ 2.224,00</td>
+          <td class="text-center">71%</td>
+          <td class="text-center"><span class="trend-indicator up">↑ 15%</span></td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr style="background: var(--bg-alt); font-weight: 600;">
+          <td>TOTAL REDE</td>
+          <td class="text-center">3.847</td>
+          <td class="text-right amount">R$ 25.680,75</td>
+          <td class="text-center">78%</td>
+          <td class="text-center"><span class="trend-indicator up">↑ 23%</span></td>
+        </tr>
+      </tfoot>
+    </table>
+
+    <!-- Seção 2: Evolução Diária -->
+    <div class="section-header">
+      <div class="section-number">2</div>
+      <h2 class="section-title">Evolução Semanal</h2>
+    </div>
+
+    <div class="chart-container">
+      <div class="bar-chart">
+        <div class="bar-item">
+          <span class="bar-label">Semana 1</span>
+          <div class="bar-track"><div class="bar-fill" style="width: 65%"></div></div>
+          <span class="bar-value">R$ 5.420</span>
+        </div>
+        <div class="bar-item">
+          <span class="bar-label">Semana 2</span>
+          <div class="bar-track"><div class="bar-fill" style="width: 75%"></div></div>
+          <span class="bar-value">R$ 6.280</span>
+        </div>
+        <div class="bar-item">
+          <span class="bar-label">Semana 3</span>
+          <div class="bar-track"><div class="bar-fill accent" style="width: 85%"></div></div>
+          <span class="bar-value">R$ 7.120</span>
+        </div>
+        <div class="bar-item">
+          <span class="bar-label">Semana 4</span>
+          <div class="bar-track"><div class="bar-fill accent" style="width: 82%"></div></div>
+          <span class="bar-value">R$ 6.860</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Seção 3: Insights -->
+    <div class="section-header">
+      <div class="section-number">3</div>
+      <h2 class="section-title">Insights e Recomendações</h2>
+    </div>
+
+    <div class="insights-grid">
+      <div class="insight-card success">
+        <h4>💡 Destaque Positivo</h4>
+        <p>A Loja Centro teve o maior crescimento (28%) e maior taxa de adesão (82%). Sugerimos replicar as práticas de atendimento desta unidade para as demais.</p>
+      </div>
+      <div class="insight-card warning">
+        <h4>⚠️ Ponto de Atenção</h4>
+        <p>A Loja Express tem a menor taxa de adesão (71%). Recomendamos treinamento adicional da equipe e sinalização no PDV sobre a opção de troco via Pix.</p>
+      </div>
+      <div class="insight-card">
+        <h4>📈 Tendência</h4>
+        <p>O horário de pico para troco via Pix é entre 12h e 14h (almoço). Considere reforço de caixa neste período para maximizar adesão.</p>
+      </div>
+      <div class="insight-card success">
+        <h4>💰 Economia</h4>
+        <p>Estimamos economia de R$ 1.230 em custos operacionais (moedas, banco, tempo). ROI do TrocoZero: 8,4x o investimento mensal.</p>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="report-footer">
+      <div class="report-footer-brand">
+        <div class="report-footer-logo">TZ</div>
+        <span>TrocoZero © 2026</span>
+      </div>
+      <div class="report-confidential">
+        Documento confidencial — Uso executivo
+      </div>
+      <div>
+        Página 1 de 1
+      </div>
+    </footer>
+  </div>
+
+  <!-- Print Actions -->
+  <div class="print-actions no-print">
+    <button class="btn-print" onclick="window.print()">
+      🖨️ Imprimir
+    </button>
+    <button class="btn-print btn-download" onclick="window.print()">
+      📥 Baixar PDF
+    </button>
+  </div>
+</body>
+</html>

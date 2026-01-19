@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Comprovante de Troco via Pix — TrocoZero</title>
+  <link rel="stylesheet" href="report-template.css">
+  <style>
+    body {
+      background: linear-gradient(135deg, #1a365d 0%, #2c5282 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+  </style>
+</head>
+<body>
+  <div class="receipt">
+    <div class="receipt-header">
+      <div class="receipt-icon">✓</div>
+      <div class="receipt-status">Pix Enviado com Sucesso!</div>
+      <div class="receipt-amount" id="amount">R$ 2,50</div>
+    </div>
+
+    <div class="receipt-body">
+      <div class="receipt-row">
+        <span class="receipt-label">Data</span>
+        <span class="receipt-value" id="date">19/01/2026</span>
+      </div>
+      <div class="receipt-row">
+        <span class="receipt-label">Horário</span>
+        <span class="receipt-value" id="time">14:32:45</span>
+      </div>
+      <div class="receipt-row">
+        <span class="receipt-label">Estabelecimento</span>
+        <span class="receipt-value" id="store">Loja Centro</span>
+      </div>
+      <div class="receipt-row">
+        <span class="receipt-label">Caixa</span>
+        <span class="receipt-value" id="register">Caixa 01</span>
+      </div>
+      <div class="receipt-row">
+        <span class="receipt-label">Chave Pix</span>
+        <span class="receipt-value" id="pixKey">***456@email.com</span>
+      </div>
+      <div class="receipt-row">
+        <span class="receipt-label">ID da Transação</span>
+        <span class="receipt-value" id="txId" style="font-size: 0.75rem;">E18236120202...</span>
+      </div>
+
+      <div class="receipt-qr" id="qrCode">
+        QR Code
+      </div>
+
+      <div class="receipt-row" style="border: none; padding-top: 16px;">
+        <span class="receipt-label">Valor da compra</span>
+        <span class="receipt-value" id="saleTotal">R$ 47,50</span>
+      </div>
+      <div class="receipt-row" style="border: none;">
+        <span class="receipt-label">Valor pago</span>
+        <span class="receipt-value" id="cashReceived">R$ 50,00</span>
+      </div>
+      <div class="receipt-row" style="border: none; border-top: 2px solid var(--primary); padding-top: 12px; margin-top: 8px;">
+        <span class="receipt-label" style="font-weight: 600; color: var(--primary);">Troco via Pix</span>
+        <span class="receipt-value" style="font-size: 1.25rem; color: var(--accent);" id="changeAmount">R$ 2,50</span>
+      </div>
+    </div>
+
+    <div class="receipt-footer">
+      <p><strong>TrocoZero</strong> — Troco via Pix automático</p>
+      <p style="margin-top: 8px;">Obrigado por usar nosso serviço!</p>
+      <p style="margin-top: 8px; font-size: 0.6875rem;">
+        Este comprovante tem validade fiscal. Guarde para sua segurança.
+      </p>
+    </div>
+  </div>
+
+  <div class="print-actions no-print">
+    <button class="btn-print" onclick="window.print()">
+      🖨️ Imprimir
+    </button>
+  </div>
+</body>
+</html>
