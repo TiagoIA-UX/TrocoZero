@@ -104,4 +104,5 @@ npm run test:coverage # com cobertura
 4. **Monitoramento** — Métricas, alertas, SLA
 
 ## Licença
-MIT
+**Proprietária** — Todos os direitos reservados.  
+Para licenciamento comercial, entre em contato com o autor.
